@@ -56,12 +56,18 @@ function appendSendForm(cardList) {
 function appendCopyButton(cardList) {
   const copyButton = document.createElement("button");
   copyButton.textContent = "copy";
+  copyButton.id = "appendedButton";
 
   const bodyElm = document.getElementsByTagName("div")[0];
+  const tmp = document.getElementById("appendedButton");
+  if (tmp != undefined) {
+    bodyElm.removeChild(tmp);
+  }
   bodyElm.appendChild(copyButton);
 
   copyButton.addEventListener('click', function() {
     copyTextToClipboard(cardList);
+    bodyElm.removeChild(copyButton);
   });
 }
 
