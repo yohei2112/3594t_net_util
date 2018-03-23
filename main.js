@@ -11,7 +11,6 @@ function main() {
     }
     myCardList = parseMyCardList(event.target.responseText);
     appendCopyButton(myCardList);
-//    appendSendForm(myCardList);
   });
   request.send();
 }
@@ -27,48 +26,23 @@ function parseMyCardList(responseBody) {
   return bodyArray[CARD_LIST_INDEX]
 }
 
-function appendSendForm(cardList) {
-    const form = document.createElement('form');
-    form.action = 'http://3594tapp.webcrow.jp/registration.php';
-    form.method = 'post';
-
-    const tmpInput = document.createElement('input');
-    tmpInput.value = cardList;
-    tmpInput.name = 'list';
-    tmpInput.type = "hidden";
-
-    form.appendChild(tmpInput);
-
-    const submitButton = document.createElement("button");
-    submitButton.textContent = "submit";
-    submitButton.type = "submit";
-
-    submitButton.addEventListener('click', function() {
-      form.submit();
-    });
-
-    const bodyElm = document.getElementsByTagName("div")[0];
-
-    bodyElm.appendChild(form);
-    bodyElm.appendChild(submitButton);
-}
-
 function appendCopyButton(cardList) {
-  const copyButton = document.createElement("button");
-  copyButton.textContent = "copy";
-  copyButton.id = "appendedButton";
+  const appendedButton = document.createElement("div");
+  appendedButton.innerHTML = "登用掲示板に登録する";
+  appendedButton.id = "appendedButton";
+  appendedButton.style = "width:50%;height:auto;margin:10px 25%;padding:10px;border:solid;background-color:#fff;";
+  appendedButton.addEventListener('click', function() {
+    copyTextToClipboard(cardList);
+    bodyElm.removeChild(appendedButton);
+    window.open("http://3594tapp.webcrow.jp/board_registration.php");
+  });
 
   const bodyElm = document.getElementsByTagName("div")[0];
   const tmp = document.getElementById("appendedButton");
   if (tmp != undefined) {
-    bodyElm.removeChild(tmp);
+    tmp.parentNode.removeChild(tmp);
   }
-  bodyElm.appendChild(copyButton);
-
-  copyButton.addEventListener('click', function() {
-    copyTextToClipboard(cardList);
-    bodyElm.removeChild(copyButton);
-  });
+  bodyElm.appendChild(appendedButton);
 }
 
 function copyTextToClipboard(text){
