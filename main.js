@@ -10,7 +10,9 @@ function main() {
       return;
     }
     myCardList = parseMyCardList(event.target.responseText);
-    appendCopyButton(myCardList);
+    if (myCardList.length > 0) {
+      appendCopyButton(myCardList);
+    }
   });
   request.send();
 }
@@ -21,7 +23,7 @@ function parseMyCardList(responseBody) {
   const bodyArray = responseBody.split("\n");
   if (bodyArray[CARD_LIST_INDEX] == undefined ) {
     alert("データ取得に失敗しました、.netにログインしていることを確認してください");
-    return;
+    return [];
   }
   return bodyArray[CARD_LIST_INDEX]
 }
