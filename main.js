@@ -52,9 +52,20 @@ function copyTextToClipboard(text){
   const bodyElm = document.getElementsByTagName("div")[0];
   bodyElm.appendChild(tmpForm);
 
-  tmpForm.select();
+  if (isIos()) {
+    tmpForm.selectionStart = 0;
+    tmpForm.selectionEnd  = tmpForm.value.length;
+  } else {
+    tmpForm.select();
+  }
 
-  document.execCommand('copy');
+  const result = document.execCommand('copy');
 
   bodyElm.removeChild(tmpForm);
+  return result;
+}
+
+function isIos() {
+  const ua = navigator.userAgent;
+  return ua.indexOf("iPhone") >= 0 || ua.indexOf("iPad") >= 0 || navigator.userAgent.indexOf("iPod") >= 0
 }
