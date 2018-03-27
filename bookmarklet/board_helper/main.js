@@ -1,6 +1,10 @@
 main();
 
 function main() {
+  if (location.host != "3594t.net") {
+    alert("三国志大戦.NETのページを開いた状態で実行してください");
+    return;
+  }
   const DATA_LIST_API_URL = "https://3594t.net/datalist/api/members/main";
   const request = new XMLHttpRequest();
   request.open("GET", DATA_LIST_API_URL);
