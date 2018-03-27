@@ -73,5 +73,5 @@ function copyTextToClipboard(text){
 
 function isIos() {
   const ua = navigator.userAgent;
-  return ua.indexOf("iPhone") >= 0 || ua.indexOf("iPad") >= 0 || navigator.userAgent.indexOf("iPod") >= 0
+  return ua.indexOf("iPhone") >= 0 || ua.indexOf("iPad") >= 0 || ua.indexOf("iPod") >= 0
 }
