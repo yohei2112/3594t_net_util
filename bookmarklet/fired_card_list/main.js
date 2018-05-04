@@ -11,8 +11,8 @@ function main() {
     if (card.fire_date != "") {
       firedCardList.push(buildFiredCardText(card));
     }
-  })
-  console.log(firedCardList);
+  });
+  appendCopyButton(firedCardList.join('\n'));
 }
 
 function buildFiredCardText(card) {
@@ -24,8 +24,9 @@ function buildFiredCardText(card) {
   const genSubText = convertGenSub(card.gen_sub0, card.gen_sub1, card.gen_sub2);
   const numberText = card.number;
   const hireLimitDateText = card.hire_limit_date;
+  const hirePageLinkText = `<a href="https://3594t.net/datalist/?v=GENERAL&s=POPUP_GENERAL&c=${base_data.GENERAL[card.idx].code}" target="_blank">登用</a>`
 
-  return `${majorVersionText}${minorVersionText} ${rarityText}${generalNameText} ${genMainText} ${genSubText} ${numberText}`;
+  return `${majorVersionText}${minorVersionText} ${rarityText}${generalNameText} ${genMainText} ${genSubText} ${numberText}　${hirePageLinkText}`;
 }
 
 function convertGenMain(key) {
@@ -48,4 +49,48 @@ function convertGenSub(sub0, sub1, sub2) {
   const sub1Text = genSubTextList[base_data.GEN_SUB[sub1].name_short];
   const sub2Text = sub2 != "" ? genSubTextList[base_data.GEN_SUB[sub2].name_short] : "";
   return `${sub0Text}${sub1Text}${sub2Text}`;
+}
+
+function appendCopyButton(cardList) {
+  const appendedButton = document.createElement("div");
+  appendedButton.innerHTML = "解任武将データをコピーする";
+  appendedButton.id = "appendedButton";
+  appendedButton.style = "width:50%;height:auto;margin:10px 25%;padding:10px;border:solid;background-color:#fff;";
+  appendedButton.addEventListener('click', function() {
+    copyTextToClipboard(cardList);
+    bodyElm.removeChild(appendedButton);
+    window.open("https://3594t-touen.jp/recruitments/new");
+  });
+
+  const bodyElm = document.getElementsByTagName("div")[0];
+  const tmp = document.getElementById("appendedButton");
+  if (tmp != undefined) {
+    tmp.parentNode.removeChild(tmp);
+  }
+  bodyElm.appendChild(appendedButton);
+}
+
+function copyTextToClipboard(text){
+  const tmpForm = document.createElement("textarea");
+  tmpForm.textContent = text;
+
+  const bodyElm = document.getElementsByTagName("div")[0];
+  bodyElm.appendChild(tmpForm);
+
+  if (isIos()) {
+    tmpForm.selectionStart = 0;
+    tmpForm.selectionEnd  = tmpForm.value.length;
+  } else {
+    tmpForm.select();
+  }
+
+  const result = document.execCommand('copy');
+
+  bodyElm.removeChild(tmpForm);
+  return result;
+}
+
+function isIos() {
+  const ua = navigator.userAgent;
+  return ua.indexOf("iPhone") >= 0 || ua.indexOf("iPad") >= 0 || ua.indexOf("iPod") >= 0
 }
