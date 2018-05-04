@@ -53,7 +53,7 @@ function convertGenSub(sub0, sub1, sub2) {
 
 function appendCopyButton(cardList) {
   const appendedButton = document.createElement("div");
-  appendedButton.innerHTML = "解任武将データをコピーする";
+  appendedButton.innerHTML = "桃園に解任武将データを登録";
   appendedButton.id = "appendedButton";
   appendedButton.style = "width:50%;height:auto;margin:10px 25%;padding:10px;border:solid;background-color:#fff;";
   appendedButton.addEventListener('click', function() {
