@@ -26,7 +26,7 @@ function buildFiredCardText(card) {
   const hireLimitDateText = card.hire_limit_date;
   const hirePageLinkText = `<a href="https://3594t.net/datalist/?v=GENERAL&s=POPUP_GENERAL&c=${base_data.GENERAL[card.idx].code}" target="_blank">登用</a>`
 
-  return `${majorVersionText}${minorVersionText} ${rarityText}${generalNameText} ${genMainText} ${genSubText} ${numberText}　${hirePageLinkText}`;
+  return `${majorVersionText}${minorVersionText} ${rarityText}${generalNameText} ${genMainText} ${genSubText} ${numberText} ${hirePageLinkText}<br>`;
 }
 
 function convertGenMain(key) {
