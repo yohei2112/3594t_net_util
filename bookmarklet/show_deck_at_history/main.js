@@ -26,7 +26,7 @@ function appendDeckArea(historyBlock){
   myDeckDiv.style.height = "64px";
   myDeckDiv.style.left = "-90px";
   myDeckDiv.style.margin = "8px 0";
-  myDeckDiv.style.width = "256px";
+  myDeckDiv.style.width = "260px";
   const myCardTable = document.createElement("table");
   myCardTable.style.border = "solid 1px #fff";
   myCardTable.style.borderCollapse = "separate";
@@ -41,7 +41,7 @@ function appendDeckArea(historyBlock){
   enemyDeckDiv.style.overflow = "hidden";
   enemyDeckDiv.style.height = "64px";
   enemyDeckDiv.style.margin = "8px 0";
-  enemyDeckDiv.style.width = "256px";
+  enemyDeckDiv.style.width = "260px";
   const enemyCardTable = document.createElement("table");
   enemyCardTable.style.border = "solid 1px #fff";
   enemyCardTable.style.borderCollapse = "separate";
@@ -82,11 +82,11 @@ function appendDeck(historyBlock){
 function addCardToDeckArea(deckArea, card) {
   var cardTd = document.createElement("td");
   cardTd.style.position = "relative";
-  cardTd.style.width = "32px";
+  cardTd.style.width = "30px";
   cardTd.style.height = "64px";
   cardTd.style.backgroundColor = "#000";
-  card.style.width = "32px";
-  card.firstElementChild.style.width = "32px";
+  card.style.width = "30px";
+  card.firstElementChild.style.width = "30px";
 
   deckArea.insertBefore(cardTd, deckArea.firstChild).appendChild(card);
 
