@@ -1,16 +1,20 @@
 main();
 
 function main() {
+  const SHOW_DECK_BATTLE_TYPE = ["全国対戦", "戦友対戦", "店内イベント"];
+
   if (!location.href.startsWith("https://3594t.net/members/history/daily")) {
     alert("三国志大戦.NETの対戦履歴ページを開いた状態で実行してください");
     return;
   }
 
-  const historyBlockList = document.getElementsByClassName("battle_list_base");
+  const blockBattleList = document.getElementsByClassName("block_battle_list");
 
-  [].forEach.call(historyBlockList, (historyBlock) => {
-     historyBlock.style.height = "128px";
-     showDeckAtHistory(historyBlock)
+  [].forEach.call(blockBattleList, (battleBlock) => {
+    var battleType = battleBlock.getElementsByClassName("battle_list_type")[0];
+    if (SHOW_DECK_BATTLE_TYPE.includes(battleType.textContent)) {
+      showDeckAtHistory(battleBlock.getElementsByClassName("battle_list_base")[0])
+    }
   });
 }
 
@@ -20,11 +24,12 @@ function showDeckAtHistory(historyBlock){
 }
 
 function appendDeckArea(historyBlock){
+  historyBlock.style.height = "128px";
+  historyBlock.target = "_blank";
+
   const myDeckDiv = document.createElement("div")
   myDeckDiv.style.position = "relative";
-  myDeckDiv.style.overflow = "hidden";
-  myDeckDiv.style.height = "64px";
-  myDeckDiv.style.left = "-90px";
+  myDeckDiv.style.left = "-98px";
   myDeckDiv.style.margin = "8px 0";
   myDeckDiv.style.width = "260px";
   const myCardTable = document.createElement("table");
@@ -38,8 +43,7 @@ function appendDeckArea(historyBlock){
 
   const enemyDeckDiv = document.createElement("div")
   enemyDeckDiv.style.position = "relative";
-  enemyDeckDiv.style.overflow = "hidden";
-  enemyDeckDiv.style.height = "64px";
+  enemyDeckDiv.style.left = "-8px";
   enemyDeckDiv.style.margin = "8px 0";
   enemyDeckDiv.style.width = "260px";
   const enemyCardTable = document.createElement("table");
@@ -85,7 +89,10 @@ function addCardToDeckArea(deckArea, card) {
   cardTd.style.width = "30px";
   cardTd.style.height = "64px";
   cardTd.style.backgroundColor = "#000";
+  cardTd.style.overflow = "hidden";
+
   card.style.width = "30px";
+  card.style.height = "64px";
   card.firstElementChild.style.width = "30px";
 
   deckArea.insertBefore(cardTd, deckArea.firstChild).appendChild(card);
