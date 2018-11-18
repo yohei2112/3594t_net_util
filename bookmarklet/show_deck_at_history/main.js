@@ -1,7 +1,7 @@
 main();
 
 function main() {
-  const SHOW_DECK_BATTLE_TYPE = ["全国対戦", "戦友対戦", "店内イベント"];
+  const SHOW_DECK_BATTLE_TYPE = ["全国対戦", "戦友対戦", "店内イベント", "天下統一戦"];
 
   if (!location.href.startsWith("https://3594t.net/members/history/daily")) {
     alert("三国志大戦.NETの対戦履歴ページを開いた状態で実行してください");
