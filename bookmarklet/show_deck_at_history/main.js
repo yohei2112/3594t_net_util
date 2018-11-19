@@ -8,6 +8,7 @@ function main() {
     return;
   }
 
+  removeAppendedElements();
   const blockBattleList = document.getElementsByClassName("block_battle_list");
 
   [].forEach.call(blockBattleList, (battleBlock) => {
@@ -23,6 +24,13 @@ function showDeckAtHistory(historyBlock){
   appendDeck(historyBlock)
 }
 
+function removeAppendedElements(){
+  [].forEach.call(document.getElementsByClassName("appended-class"), (appendedElement) => {
+    appendedElement.remove();
+  });
+
+}
+
 function appendDeckArea(historyBlock){
   historyBlock.style.height = "128px";
   historyBlock.target = "_blank";
@@ -32,6 +40,7 @@ function appendDeckArea(historyBlock){
   myDeckDiv.style.left = "-98px";
   myDeckDiv.style.margin = "8px 0";
   myDeckDiv.style.width = "260px";
+  myDeckDiv.classList.add("appended-class");
   const myCardTable = document.createElement("table");
   myCardTable.style.border = "solid 1px #fff";
   myCardTable.style.borderCollapse = "separate";
@@ -46,6 +55,7 @@ function appendDeckArea(historyBlock){
   enemyDeckDiv.style.left = "-8px";
   enemyDeckDiv.style.margin = "8px 0";
   enemyDeckDiv.style.width = "260px";
+  enemyDeckDiv.classList.add("appended-class");
   const enemyCardTable = document.createElement("table");
   enemyCardTable.style.border = "solid 1px #fff";
   enemyCardTable.style.borderCollapse = "separate";
