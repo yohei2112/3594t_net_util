@@ -25,10 +25,10 @@ function showDeckAtHistory(historyBlock){
 }
 
 function removeAppendedElements(){
-  [].forEach.call(document.getElementsByClassName("appended-class"), (appendedElement) => {
-    appendedElement.remove();
-  });
-
+  const appendedElementList = document.getElementsByClassName("appended-class");
+  for ( var i = appendedElementList.length - 1; i >= 0 ; i--) {
+    appendedElementList[i].remove();
+  };
 }
 
 function appendDeckArea(historyBlock){
