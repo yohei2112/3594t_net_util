@@ -52,6 +52,8 @@ function appendDeckArea(historyBlock){
   myCardTable.style.border = "solid 1px #fff";
   myCardTable.style.borderCollapse = "separate";
   myCardTable.style.borderSpacing = "2px";
+  myCardTable.style.position = "absolute";
+  myCardTable.style.right = "0";
   const myCardTr = document.createElement("tr");
   myCardTr.id = historyBlock.href + "_mydata";
   myCardTable.appendChild(myCardTr);
