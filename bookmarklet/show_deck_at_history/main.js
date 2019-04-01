@@ -32,15 +32,22 @@ function removeAppendedElements(){
 }
 
 function appendDeckArea(historyBlock){
-  historyBlock.style.height = "128px";
+  historyBlock.style.height = "158px";
   historyBlock.target = "_blank";
 
-  const myDeckDiv = document.createElement("div")
+  const myDeckDiv = document.createElement("div");
   myDeckDiv.style.position = "relative";
+  myDeckDiv.style.top = "30px";
   myDeckDiv.style.left = "-98px";
   myDeckDiv.style.margin = "8px 0";
   myDeckDiv.style.width = "260px";
   myDeckDiv.classList.add("appended-class");
+
+  const myGageDiv = document.createElement("div");
+  myGageDiv.style.position = "relative";
+  myGageDiv.classList.add("my-gage");
+  myDeckDiv.appendChild(myGageDiv);
+
   const myCardTable = document.createElement("table");
   myCardTable.style.border = "solid 1px #fff";
   myCardTable.style.borderCollapse = "separate";
@@ -52,10 +59,17 @@ function appendDeckArea(historyBlock){
 
   const enemyDeckDiv = document.createElement("div")
   enemyDeckDiv.style.position = "relative";
+  enemyDeckDiv.style.top = "30px";
   enemyDeckDiv.style.left = "-8px";
   enemyDeckDiv.style.margin = "8px 0";
   enemyDeckDiv.style.width = "260px";
   enemyDeckDiv.classList.add("appended-class");
+
+  const enemyGageDiv = document.createElement("div");
+  enemyGageDiv.style.position = "relative";
+  enemyGageDiv.classList.add("enemy-gage");
+  enemyDeckDiv.appendChild(enemyGageDiv);
+
   const enemyCardTable = document.createElement("table");
   enemyCardTable.style.border = "solid 1px #fff";
   enemyCardTable.style.borderCollapse = "separate";
@@ -81,10 +95,14 @@ function appendDeck(historyBlock){
       alert("データ取得に失敗しました、ステータスコード：" + event.target.status);
       return;
     }
+    var myGage = event.target.responseXML.getElementsByClassName("battledetail_graph_own")[0]
+    historyBlock.getElementsByClassName("my-gage")[0].appendChild(myGage);
     var myCardList = event.target.responseXML.getElementsByClassName("frame_red")[0].getElementsByClassName("data_deck_cardblock_card");
     for ( var i = myCardList.length - 1; i >= 0 ; i--) {
       addCardToDeckArea(myDeckArea, myCardList[i]);
     };
+    var enemyGage = event.target.responseXML.getElementsByClassName("battledetail_graph_enemy")[0]
+    historyBlock.getElementsByClassName("enemy-gage")[0].appendChild(enemyGage);
     var enemyCardList = event.target.responseXML.getElementsByClassName("frame_blue")[0].getElementsByClassName("data_deck_cardblock_card");
     for ( var i = enemyCardList.length - 1; i >= 0 ; i--) {
       addCardToDeckArea(enemyDeckArea, enemyCardList[i]);
