@@ -53,7 +53,6 @@ function appendDeckArea(historyBlock){
   myCardTable.style.borderCollapse = "separate";
   myCardTable.style.borderSpacing = "2px";
   myCardTable.style.position = "absolute";
-  myCardTable.style.right = "0";
   const myCardTr = document.createElement("tr");
   myCardTr.id = historyBlock.href + "_mydata";
   myCardTable.appendChild(myCardTr);
@@ -76,6 +75,7 @@ function appendDeckArea(historyBlock){
   enemyCardTable.style.border = "solid 1px #fff";
   enemyCardTable.style.borderCollapse = "separate";
   enemyCardTable.style.borderSpacing = "2px";
+  enemyCardTable.style.position = "absolute";
   const enemyCardTr = document.createElement("tr");
   enemyCardTr.id = historyBlock.href + "_enemydata";
   enemyCardTable.appendChild(enemyCardTr);
@@ -100,15 +100,19 @@ function appendDeck(historyBlock){
     var myGage = event.target.responseXML.getElementsByClassName("battledetail_graph_own")[0]
     historyBlock.getElementsByClassName("my-gage")[0].appendChild(myGage);
     var myCardList = event.target.responseXML.getElementsByClassName("frame_red")[0].getElementsByClassName("data_deck_cardblock_card");
-    for ( var i = myCardList.length - 1; i >= 0 ; i--) {
+    var myCardCount = myCardList.length;
+    for ( var i = myCardCount - 1; i >= 0 ; i--) {
       addCardToDeckArea(myDeckArea, myCardList[i]);
     };
+    adjustMyDeckTablePosition(myDeckArea.parentElement, myCardCount);
     var enemyGage = event.target.responseXML.getElementsByClassName("battledetail_graph_enemy")[0]
     historyBlock.getElementsByClassName("enemy-gage")[0].appendChild(enemyGage);
     var enemyCardList = event.target.responseXML.getElementsByClassName("frame_blue")[0].getElementsByClassName("data_deck_cardblock_card");
-    for ( var i = enemyCardList.length - 1; i >= 0 ; i--) {
+    var enemyCardCount = enemyCardList.length;
+    for ( var i = enemyCardCount - 1; i >= 0 ; i--) {
       addCardToDeckArea(enemyDeckArea, enemyCardList[i]);
     };
+    adjustEnemyDeckTablePosition(enemyDeckArea.parentElement, enemyCardCount);
   });
   request.send();
 }
@@ -127,4 +131,14 @@ function addCardToDeckArea(deckArea, card) {
 
   deckArea.insertBefore(cardTd, deckArea.firstChild).appendChild(card);
 
+}
+
+function adjustMyDeckTablePosition(table, count) {
+  const adjustValue = 130 - (count * 15);
+  table.style.left = adjustValue + "px";
+}
+
+function adjustEnemyDeckTablePosition(table, count) {
+  const adjustValue = 120 - (count * 15);
+  table.style.left = adjustValue + "px";
 }
