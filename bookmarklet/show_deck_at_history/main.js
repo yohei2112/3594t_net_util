@@ -17,6 +17,7 @@ function main() {
       showDeckAtHistory(battleBlock.getElementsByClassName("battle_list_base")[0])
     }
   });
+  appendToggleNameButton();
 }
 
 function showDeckAtHistory(historyBlock){
@@ -141,4 +142,64 @@ function adjustMyDeckTablePosition(table, count) {
 function adjustEnemyDeckTablePosition(table, count) {
   const adjustValue = 120 - (count * 15);
   table.style.left = adjustValue + "px";
+}
+
+function toggleMyName() {
+  [].forEach.call(document.getElementsByClassName("battle_list_mydata"), (mydata) => {
+      toggleVisibility(mydata.getElementsByClassName("battle_list_name")[0])
+    }
+  );
+}
+
+function toggleEnemyName() {
+  [].forEach.call(document.getElementsByClassName("battle_list_enemydata"), (mydata) => {
+      toggleVisibility(mydata.getElementsByClassName("battle_list_name")[0])
+    }
+  );
+}
+
+function toggleResult() {
+  toggleElemetnsVisibility(document.getElementsByClassName("battle_list_result"));
+}
+
+function toggleElemetnsVisibility(elements) {
+  [].forEach.call(elements, (element) => {
+    toggleVisibility(element);
+  });
+}
+
+function toggleVisibility(target) {
+  if (target.style.visibility != "hidden") {
+    target.style.visibility = "hidden";
+  } else {
+    target.style.visibility = "visible"
+  }
+}
+
+function appendToggleNameButton() {
+  const toggleMyNameButton = document.createElement("button");
+  toggleMyNameButton.addEventListener('click', function () {
+    toggleMyName()
+  });
+  toggleMyNameButton.innerHTML = "自軍名 on/off";
+  toggleMyNameButton.classList.add("appended-class");
+  toggleMyNameButton.style.display = "inline-block";
+  toggleMyNameButton.style.margin = "0 5px";
+  toggleMyNameButton.style.padding = "6px";
+  toggleMyNameButton.style.fontWeight = "bold";
+
+  const toggleEnemyNameButton = document.createElement("button");
+  toggleEnemyNameButton.addEventListener('click', function () {
+    toggleEnemyName()
+  });
+  toggleEnemyNameButton.innerHTML = "敵軍名 on/off";
+  toggleEnemyNameButton.classList.add("appended-class");
+  toggleEnemyNameButton.style.display = "inline-block";
+  toggleEnemyNameButton.style.margin = "0 5px";
+  toggleEnemyNameButton.style.padding = "6px";
+  toggleEnemyNameButton.style.fontWeight = "bold";
+
+  const targetElement = document.getElementsByClassName("text_pager")[0];
+  targetElement.insertBefore(toggleMyNameButton, targetElement.firstChild);
+  targetElement.appendChild(toggleEnemyNameButton);
 }
