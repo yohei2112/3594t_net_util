@@ -30,7 +30,7 @@ function updateCountText(frameTitle, countElement, generalUseCount) {
   countElement.style.lineHeight = "34px";
   countElement.style.paddingTop = "2px";
   const unit = frameTitle == "勝利数" ? "%" : "回/戦";
-  countElement.innerHTML = countElement.innerHTML + "\n" + calclatedCount + "<span class='font_80 ml_5'>" + unit + "</span>";
+  countElement.innerHTML = countElement.innerHTML + "<br>" + calclatedCount + "<span class='font_80 ml_5'>" + unit + "</span>";
 }
 
 function getFrameTitle(frameElement) {
