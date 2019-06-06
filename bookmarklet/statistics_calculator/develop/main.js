@@ -1,6 +1,11 @@
 main();
 
 function main() {
+  if (!location.href.startsWith("https://3594t.net/members/statistics/top")) {
+    alert("三国志大戦.NETの統計情報 > TOP10情報ページを開いた状態で実行してください");
+    return;
+  }
+
   const frameList = document.getElementsByClassName("frame01");
   const generalUseCountList = getGeneralUseCountList(frameList[0]);
   for(var i=1; i<frameList.length; i++) {
@@ -27,8 +32,8 @@ function expandListElement(listElement) {
 function updateCountText(frameTitle, countElement, generalUseCount) {
   const orgCount = getCount(countElement);
   const calclatedCount = frameTitle == "勝利数" ? (100 * orgCount / generalUseCount).toFixed(3) : (orgCount / generalUseCount).toFixed(3);
-  countElement.style.lineHeight = "34px";
-  countElement.style.paddingTop = "2px";
+  countElement.style.lineHeight = "32px";
+  countElement.style.paddingTop = "4px";
   const unit = frameTitle == "勝利数" ? "%" : "回/戦";
   countElement.innerHTML = countElement.innerHTML + "<br>" + calclatedCount + "<span class='font_80 ml_5'>" + unit + "</span>";
 }
