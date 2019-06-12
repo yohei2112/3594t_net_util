@@ -8,8 +8,8 @@ function main() {
     return;
   }
 
-  if (isSnapshotMode()) {
-    alert("スナップショットモードには対応していません、通常モードで実行してください");
+  if (isScreenshotMode()) {
+    alert("スクリーンショットモードには対応していません、通常モードで実行してください");
     return;
   }
 
@@ -209,6 +209,6 @@ function appendToggleNameButton() {
   targetElement.appendChild(toggleEnemyNameButton);
 }
 
-function isSnapshotMode() {
+function isScreenshotMode() {
   return document.getElementsByClassName("btn_switch_screen on").length > 0;
 }
