@@ -8,6 +8,11 @@ function main() {
     return;
   }
 
+  if (isSnapshotMode()) {
+    alert("スナップショットモードには対応していません、通常モードで実行してください");
+    return;
+  }
+
   removeAppendedElements();
   const blockBattleList = document.getElementsByClassName("block_battle_list");
 
@@ -202,4 +207,8 @@ function appendToggleNameButton() {
   const targetElement = document.getElementsByClassName("text_pager")[0];
   targetElement.insertBefore(toggleMyNameButton, targetElement.firstChild);
   targetElement.appendChild(toggleEnemyNameButton);
+}
+
+function isSnapshotMode() {
+  return document.getElementsByClassName("btn_switch_screen on").length > 0;
 }
