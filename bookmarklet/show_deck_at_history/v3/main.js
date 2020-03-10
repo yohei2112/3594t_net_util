@@ -1,8 +1,10 @@
 main();
 
 function main() {
-  if (!location.href.startsWith("https://3594t.net/members/history/daily") && !location.href.startsWith("https://3594t.net/members/movie/recode/")) {
-    alert("三国志大戦.NETの対戦履歴ページ又は戦いの記録ページを開いた状態で実行してください");
+  const SHOW_DECK_BATTLE_TYPE = ["全国対戦", "戦友対戦", "店内対戦", "店内イベント", "天下統一戦"];
+
+  if (!location.href.startsWith("https://3594t.net/members/history/daily")) {
+    alert("三国志大戦.NETの対戦履歴ページを開いた状態で実行してください");
     return;
   }
 
@@ -12,41 +14,20 @@ function main() {
   }
 
   removeAppendedElements();
-  if (location.href.startsWith("https://3594t.net/members/history/daily")) {
-    showDeckAtHistory()
-  }
-
-  if (location.href.startsWith("https://3594t.net/members/movie/recode/")) {
-    showDeckAtRecord()
-  }
-}
-
-function showDeckAtRecord(){
-
-  const recordOfWarTabRecordList = document.getElementsByClassName("record_of_war_tab_record");
-
-  [].forEach.call(recordOfWarTabRecordList, (recordOfWarTabRcord) => {
-    var historyBlock = recordOfWarTabRcord.firstElementChild
-    appendDeckArea(historyBlock);
-    appendDeck(historyBlock)
-  });
-}
-
-
-function showDeckAtHistory(){
-  const SHOW_DECK_BATTLE_TYPE = ["全国対戦", "戦友対戦", "店内対戦", "店内イベント", "天下統一戦"];
-
   const blockBattleList = document.getElementsByClassName("block_battle_list");
 
   [].forEach.call(blockBattleList, (battleBlock) => {
     var battleType = battleBlock.getElementsByClassName("battle_list_type")[0];
     if (SHOW_DECK_BATTLE_TYPE.includes(battleType.textContent)) {
-      var historyBlock = battleBlock.getElementsByClassName("battle_list_base")[0]
-      appendDeckArea(historyBlock);
-      appendDeck(historyBlock)
+      showDeckAtHistory(battleBlock.getElementsByClassName("battle_list_base")[0])
     }
   });
   appendToggleNameButton();
+}
+
+function showDeckAtHistory(historyBlock){
+  appendDeckArea(historyBlock);
+  appendDeck(historyBlock)
 }
 
 function removeAppendedElements(){
@@ -57,21 +38,15 @@ function removeAppendedElements(){
 }
 
 function appendDeckArea(historyBlock){
-  if (location.href.startsWith("https://3594t.net/members/history/daily")) {
-    historyBlock.style.height = "158px";
-  }
-  if (location.href.startsWith("https://3594t.net/members/movie/recode/")) {
-    historyBlock.parentNode.parentNode.style.height = "250px";
-  }
-
+  historyBlock.style.height = "158px";
   historyBlock.target = "_blank";
 
   const myDeckDiv = document.createElement("div");
   myDeckDiv.style.position = "relative";
-  myDeckDiv.style.top = location.href.startsWith("https://3594t.net/members/history/daily") ? "30px" : "40px";
-  if (location.href.startsWith("https://3594t.net/members/history/daily")) myDeckDiv.style.left = "-98px";
+  myDeckDiv.style.top = "30px";
+  myDeckDiv.style.left = "-98px";
+  myDeckDiv.style.margin = "8px 0";
   myDeckDiv.style.width = "260px";
-  myDeckDiv.style.height = "70px";
   myDeckDiv.classList.add("appended-class");
 
   const myGageDiv = document.createElement("div");
@@ -83,7 +58,7 @@ function appendDeckArea(historyBlock){
   myCardTable.style.border = "solid 1px #fff";
   myCardTable.style.borderCollapse = "separate";
   myCardTable.style.borderSpacing = "2px";
-  myCardTable.style.margin = "auto";
+  myCardTable.style.position = "absolute";
   const myCardTr = document.createElement("tr");
   myCardTr.id = historyBlock.href + "_mydata";
   myCardTable.appendChild(myCardTr);
@@ -91,10 +66,10 @@ function appendDeckArea(historyBlock){
 
   const enemyDeckDiv = document.createElement("div")
   enemyDeckDiv.style.position = "relative";
-  enemyDeckDiv.style.top = location.href.startsWith("https://3594t.net/members/history/daily") ? "30px" : "40px";
-  enemyDeckDiv.style.left = location.href.startsWith("https://3594t.net/members/history/daily") ? "-8px" : "20px";
+  enemyDeckDiv.style.top = "30px";
+  enemyDeckDiv.style.left = "-8px";
+  enemyDeckDiv.style.margin = "8px 0";
   enemyDeckDiv.style.width = "260px";
-  enemyDeckDiv.style.height = "70px";
   enemyDeckDiv.classList.add("appended-class");
 
   const enemyGageDiv = document.createElement("div");
@@ -106,21 +81,14 @@ function appendDeckArea(historyBlock){
   enemyCardTable.style.border = "solid 1px #fff";
   enemyCardTable.style.borderCollapse = "separate";
   enemyCardTable.style.borderSpacing = "2px";
-  enemyCardTable.style.margin = "auto";
+  enemyCardTable.style.position = "absolute";
   const enemyCardTr = document.createElement("tr");
   enemyCardTr.id = historyBlock.href + "_enemydata";
   enemyCardTable.appendChild(enemyCardTr);
   enemyDeckDiv.appendChild(enemyCardTable);
 
-  if (location.href.startsWith("https://3594t.net/members/history/daily")) {
-    historyBlock.getElementsByClassName("battle_list_mydata")[0].appendChild(myDeckDiv)
-    historyBlock.getElementsByClassName("battle_list_enemydata")[0].appendChild(enemyDeckDiv)
-  }
-  if (location.href.startsWith("https://3594t.net/members/movie/recode/")) {
-    historyBlock.parentNode.parentNode.getElementsByClassName("record_of_war_mydata")[0].appendChild(myDeckDiv)
-    historyBlock.parentNode.parentNode.getElementsByClassName("record_of_war_enemydata")[0].appendChild(enemyDeckDiv)
-  }
-
+  historyBlock.getElementsByClassName("battle_list_mydata")[0].appendChild(myDeckDiv)
+  historyBlock.getElementsByClassName("battle_list_enemydata")[0].appendChild(enemyDeckDiv)
 }
 
 function appendDeck(historyBlock){
@@ -136,37 +104,21 @@ function appendDeck(historyBlock){
       return;
     }
     var myGage = event.target.responseXML.getElementsByClassName("battledetail_graph_own")[0]
-    myGage.style.left = "30px";
-
-    if (location.href.startsWith("https://3594t.net/members/history/daily")) {
-      historyBlock.getElementsByClassName("my-gage")[0].appendChild(myGage);
-    }
-    if (location.href.startsWith("https://3594t.net/members/movie/recode/")) {
-      historyBlock.parentNode.parentNode.getElementsByClassName("my-gage")[0].appendChild(myGage);
-    }
-
+    historyBlock.getElementsByClassName("my-gage")[0].appendChild(myGage);
     var myCardList = event.target.responseXML.getElementsByClassName("frame_red")[0].getElementsByClassName("data_deck_cardblock_card");
     var myCardCount = myCardList.length;
     for ( var i = myCardCount - 1; i >= 0 ; i--) {
       addCardToDeckArea(myDeckArea, myCardList[i]);
     };
-
+    adjustMyDeckTablePosition(myDeckArea.parentElement, myCardCount);
     var enemyGage = event.target.responseXML.getElementsByClassName("battledetail_graph_enemy")[0]
-    enemyGage.style.right = "30px";
-
-    if (location.href.startsWith("https://3594t.net/members/history/daily")) {
-      historyBlock.getElementsByClassName("enemy-gage")[0].appendChild(enemyGage);
-    }
-    if (location.href.startsWith("https://3594t.net/members/movie/recode/")) {
-      historyBlock.parentNode.parentNode.getElementsByClassName("enemy-gage")[0].appendChild(enemyGage);
-    }
-
-
+    historyBlock.getElementsByClassName("enemy-gage")[0].appendChild(enemyGage);
     var enemyCardList = event.target.responseXML.getElementsByClassName("frame_blue")[0].getElementsByClassName("data_deck_cardblock_card");
     var enemyCardCount = enemyCardList.length;
     for ( var i = enemyCardCount - 1; i >= 0 ; i--) {
       addCardToDeckArea(enemyDeckArea, enemyCardList[i]);
     };
+    adjustEnemyDeckTablePosition(enemyDeckArea.parentElement, enemyCardCount);
   });
   request.send();
 }
@@ -185,6 +137,16 @@ function addCardToDeckArea(deckArea, card) {
 
   deckArea.insertBefore(cardTd, deckArea.firstChild).appendChild(card);
 
+}
+
+function adjustMyDeckTablePosition(table, count) {
+  const adjustValue = 130 - (count * 15);
+  table.style.left = adjustValue + "px";
+}
+
+function adjustEnemyDeckTablePosition(table, count) {
+  const adjustValue = 120 - (count * 15);
+  table.style.left = adjustValue + "px";
 }
 
 function toggleMyName() {
