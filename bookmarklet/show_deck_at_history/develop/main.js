@@ -68,10 +68,10 @@ function appendDeckArea(historyBlock){
 
   const myDeckDiv = document.createElement("div");
   myDeckDiv.style.position = "relative";
-  myDeckDiv.style.top = "30px";
+  myDeckDiv.style.top = location.href.startsWith("https://3594t.net/members/history/daily") ? "30px" : "40px";
   if (location.href.startsWith("https://3594t.net/members/history/daily")) myDeckDiv.style.left = "-98px";
-  myDeckDiv.style.margin = "8px 0";
   myDeckDiv.style.width = "260px";
+  myDeckDiv.style.height = "70px";
   myDeckDiv.classList.add("appended-class");
 
   const myGageDiv = document.createElement("div");
@@ -83,7 +83,7 @@ function appendDeckArea(historyBlock){
   myCardTable.style.border = "solid 1px #fff";
   myCardTable.style.borderCollapse = "separate";
   myCardTable.style.borderSpacing = "2px";
-  myCardTable.style.position = "absolute";
+  myCardTable.style.margin = "auto";
   const myCardTr = document.createElement("tr");
   myCardTr.id = historyBlock.href + "_mydata";
   myCardTable.appendChild(myCardTr);
@@ -91,10 +91,10 @@ function appendDeckArea(historyBlock){
 
   const enemyDeckDiv = document.createElement("div")
   enemyDeckDiv.style.position = "relative";
-  enemyDeckDiv.style.top = "30px";
+  enemyDeckDiv.style.top = location.href.startsWith("https://3594t.net/members/history/daily") ? "30px" : "40px";
   enemyDeckDiv.style.left = location.href.startsWith("https://3594t.net/members/history/daily") ? "-8px" : "20px";
-  enemyDeckDiv.style.margin = "8px 0";
   enemyDeckDiv.style.width = "260px";
+  enemyDeckDiv.style.height = "70px";
   enemyDeckDiv.classList.add("appended-class");
 
   const enemyGageDiv = document.createElement("div");
@@ -106,7 +106,7 @@ function appendDeckArea(historyBlock){
   enemyCardTable.style.border = "solid 1px #fff";
   enemyCardTable.style.borderCollapse = "separate";
   enemyCardTable.style.borderSpacing = "2px";
-  enemyCardTable.style.position = "absolute";
+  enemyCardTable.style.margin = "auto";
   const enemyCardTr = document.createElement("tr");
   enemyCardTr.id = historyBlock.href + "_enemydata";
   enemyCardTable.appendChild(enemyCardTr);
@@ -136,6 +136,7 @@ function appendDeck(historyBlock){
       return;
     }
     var myGage = event.target.responseXML.getElementsByClassName("battledetail_graph_own")[0]
+    myGage.style.left = "30px";
 
     if (location.href.startsWith("https://3594t.net/members/history/daily")) {
       historyBlock.getElementsByClassName("my-gage")[0].appendChild(myGage);
@@ -149,8 +150,9 @@ function appendDeck(historyBlock){
     for ( var i = myCardCount - 1; i >= 0 ; i--) {
       addCardToDeckArea(myDeckArea, myCardList[i]);
     };
-    adjustMyDeckTablePosition(myDeckArea.parentElement, myCardCount);
+
     var enemyGage = event.target.responseXML.getElementsByClassName("battledetail_graph_enemy")[0]
+    enemyGage.style.right = "30px";
 
     if (location.href.startsWith("https://3594t.net/members/history/daily")) {
       historyBlock.getElementsByClassName("enemy-gage")[0].appendChild(enemyGage);
@@ -165,7 +167,6 @@ function appendDeck(historyBlock){
     for ( var i = enemyCardCount - 1; i >= 0 ; i--) {
       addCardToDeckArea(enemyDeckArea, enemyCardList[i]);
     };
-    adjustEnemyDeckTablePosition(enemyDeckArea.parentElement, enemyCardCount);
   });
   request.send();
 }
@@ -184,16 +185,6 @@ function addCardToDeckArea(deckArea, card) {
 
   deckArea.insertBefore(cardTd, deckArea.firstChild).appendChild(card);
 
-}
-
-function adjustMyDeckTablePosition(table, count) {
-  const adjustValue = 130 - (count * 15);
-  table.style.left = adjustValue + "px";
-}
-
-function adjustEnemyDeckTablePosition(table, count) {
-  const adjustValue = 120 - (count * 15);
-  table.style.left = adjustValue + "px";
 }
 
 function toggleMyName() {
