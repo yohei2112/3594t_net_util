@@ -22,7 +22,7 @@ function main() {
 }
 
 function parseMyCardList(responseBody) {
-  const CARD_LIST_INDEX = 2;
+  const CARD_LIST_INDEX = 3;
 
   const bodyArray = responseBody.split("\n");
   if (bodyArray[CARD_LIST_INDEX] == undefined ) {
