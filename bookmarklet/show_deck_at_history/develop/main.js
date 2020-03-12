@@ -72,7 +72,11 @@ function appendDeckArea(historyBlock){
   if (location.href.startsWith("https://3594t.net/members/history/daily")) myDeckDiv.style.left = "-98px";
   myDeckDiv.style.width = "260px";
   myDeckDiv.style.height = "70px";
+  myDeckDiv.style.textAlign = "center";
   myDeckDiv.classList.add("appended-class");
+
+  const enemyDeckDiv = myDeckDiv.cloneNode(true);
+  enemyDeckDiv.style.left = location.href.startsWith("https://3594t.net/members/history/daily") ? "-8px" : "20px";
 
   const myGageDiv = document.createElement("div");
   myGageDiv.style.position = "relative";
@@ -84,29 +88,19 @@ function appendDeckArea(historyBlock){
   myCardTable.style.borderCollapse = "separate";
   myCardTable.style.borderSpacing = "2px";
   myCardTable.style.margin = "auto";
+
+  const enemyCardTable = myCardTable.cloneNode(true);
+
   const myCardTr = document.createElement("tr");
   myCardTr.id = historyBlock.href + "_mydata";
   myCardTable.appendChild(myCardTr);
   myDeckDiv.appendChild(myCardTable);
-
-  const enemyDeckDiv = document.createElement("div")
-  enemyDeckDiv.style.position = "relative";
-  enemyDeckDiv.style.top = location.href.startsWith("https://3594t.net/members/history/daily") ? "30px" : "40px";
-  enemyDeckDiv.style.left = location.href.startsWith("https://3594t.net/members/history/daily") ? "-8px" : "20px";
-  enemyDeckDiv.style.width = "260px";
-  enemyDeckDiv.style.height = "70px";
-  enemyDeckDiv.classList.add("appended-class");
 
   const enemyGageDiv = document.createElement("div");
   enemyGageDiv.style.position = "relative";
   enemyGageDiv.classList.add("enemy-gage");
   enemyDeckDiv.appendChild(enemyGageDiv);
 
-  const enemyCardTable = document.createElement("table");
-  enemyCardTable.style.border = "solid 1px #fff";
-  enemyCardTable.style.borderCollapse = "separate";
-  enemyCardTable.style.borderSpacing = "2px";
-  enemyCardTable.style.margin = "auto";
   const enemyCardTr = document.createElement("tr");
   enemyCardTr.id = historyBlock.href + "_enemydata";
   enemyCardTable.appendChild(enemyCardTr);
@@ -135,7 +129,8 @@ function appendDeck(historyBlock){
       alert("データ取得に失敗しました、ステータスコード：" + event.target.status);
       return;
     }
-    var myGage = event.target.responseXML.getElementsByClassName("battledetail_graph_own")[0]
+    const responseDocument = event.target.responseXML;
+    var myGage = responseDocument.getElementsByClassName("battledetail_graph_own")[0]
     myGage.style.left = "30px";
 
     if (location.href.startsWith("https://3594t.net/members/history/daily")) {
@@ -145,13 +140,13 @@ function appendDeck(historyBlock){
       historyBlock.parentNode.parentNode.getElementsByClassName("my-gage")[0].appendChild(myGage);
     }
 
-    var myCardList = event.target.responseXML.getElementsByClassName("frame_red")[0].getElementsByClassName("data_deck_cardblock_card");
+    var myCardList = responseDocument.getElementsByClassName("frame_red")[0].getElementsByClassName("data_deck_cardblock_card");
     var myCardCount = myCardList.length;
     for ( var i = myCardCount - 1; i >= 0 ; i--) {
       addCardToDeckArea(myDeckArea, myCardList[i]);
     };
 
-    var enemyGage = event.target.responseXML.getElementsByClassName("battledetail_graph_enemy")[0]
+    var enemyGage = responseDocument.getElementsByClassName("battledetail_graph_enemy")[0]
     enemyGage.style.right = "30px";
 
     if (location.href.startsWith("https://3594t.net/members/history/daily")) {
@@ -162,11 +157,47 @@ function appendDeck(historyBlock){
     }
 
 
-    var enemyCardList = event.target.responseXML.getElementsByClassName("frame_blue")[0].getElementsByClassName("data_deck_cardblock_card");
+    var enemyCardList = responseDocument.getElementsByClassName("frame_blue")[0].getElementsByClassName("data_deck_cardblock_card");
     var enemyCardCount = enemyCardList.length;
     for ( var i = enemyCardCount - 1; i >= 0 ; i--) {
       addCardToDeckArea(enemyDeckArea, enemyCardList[i]);
     };
+
+    if (responseDocument.getElementsByClassName("avatar_corp").length > 0) {
+      if (location.href.startsWith("https://3594t.net/members/history/daily")) {
+        historyBlock.style.height = historyBlock.clientHeight + 48 + "px";
+      }
+      if (location.href.startsWith("https://3594t.net/members/movie/recode/")) {
+        historyBlock.parentNode.parentNode.style.height = historyBlock.parentNode.parentNode.clientHeight + 48 + "px";
+      }
+      var myCorpImg = responseDocument.getElementsByClassName("avatar_corp")[0].lastElementChild;
+      var enemyCorpImg = responseDocument.getElementsByClassName("avatar_corp")[1].lastElementChild;
+      myCorpImg.style.height = "40px";
+      myCorpImg.style.width = "40px";
+      myCorpImg.style.margin = "4px 0";
+      enemyCorpImg.style.height = "40px";
+      enemyCorpImg.style.width = "40px";
+      enemyCorpImg.style.margin = "4px 0";
+      var myCorpDiv = document.createElement("div");
+      myCorpDiv.style.background = "url(https://3594t.net/img/block_data560_corp.png) no-repeat center top";
+      myCorpDiv.style.width = "88px";
+      myCorpDiv.style.height = "48px";
+      myCorpDiv.style.margin = "auto";
+      var myCorpTextDiv = document.createElement("div");
+      myCorpTextDiv.style.width = "24px";
+      myCorpTextDiv.style.height = "48px";
+      myCorpTextDiv.style.margin = "0 12px 0 0";
+      myCorpTextDiv.style.display = "inline-block";
+      myCorpTextDiv.style.background = "url(https://3594t.net/img/battle_history/text_corp1.png) no-repeat center center";
+
+      myCorpDiv.appendChild(myCorpTextDiv);
+      var enemyCorpDiv = myCorpDiv.cloneNode(true);
+
+      myCorpDiv.appendChild(myCorpImg);
+      enemyCorpDiv.appendChild(enemyCorpImg);
+      myDeckArea.parentElement.parentElement.appendChild(myCorpDiv);
+      enemyDeckArea.parentElement.parentElement.appendChild(enemyCorpDiv);
+    }
   });
   request.send();
 }
