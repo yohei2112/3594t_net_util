@@ -13,12 +13,16 @@ function main() {
     getGeneralUseCountFromApi().then((result) => {
       generalUseCountList = Object.assign(result, generalUseCountList)
       for(var i=1; i<frameList.length; i++) {
-        calcCountPerUse(generalUseCountList, frameList[i]);
+        if (!frameList[i].classList.contains("corp")) {
+          calcCountPerUse(generalUseCountList, frameList[i]);
+        }
       }
     });
   } else {
     for(var i=1; i<frameList.length; i++) {
-      calcCountPerUse(generalUseCountList, frameList[i]);
+      if (!frameList[i].classList.contains("corp")) {
+        calcCountPerUse(generalUseCountList, frameList[i]);
+      }
     }
   }
 }
@@ -79,8 +83,10 @@ function getGeneralUseCountFromApi() {
     var generalUseCountList = [];
     var avatarHash = "";
     for(var i=0; i<top10list.length; i++) {
-      avatarHash = getAvatarHash(top10list[i]);
-      generalUseCountList[avatarHash] = getGeneralUseCountByAvatarHash(generalIndexAndUseCountList, generalBaseDataList, avatarHash);
+      if (!top10list[i].parentNode.classList.contains("corp")) {
+        avatarHash = getAvatarHash(top10list[i]);
+        generalUseCountList[avatarHash] = getGeneralUseCountByAvatarHash(generalIndexAndUseCountList, generalBaseDataList, avatarHash);
+      }
     }
     return generalUseCountList;
   })
@@ -89,7 +95,7 @@ function getGeneralUseCountFromApi() {
 function getGeneralIndexAndUseCountListFromApi() {
   return new Promise((resolve) => {
     const DATA_LIST_API_URL = "https://3594t.net/datalist/api/members/main";
-    const GENERAL_USE_COUNT_INDEX = 3;
+    const GENERAL_USE_COUNT_INDEX = 4;
     const request = new XMLHttpRequest();
     request.open("GET", DATA_LIST_API_URL);
     request.addEventListener("load", (event) => {
