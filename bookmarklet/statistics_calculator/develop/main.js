@@ -49,7 +49,7 @@ function updateCountText(frameTitle, countElement, generalUseCount) {
   countElement.style.lineHeight = "32px";
   countElement.style.paddingTop = "4px";
   countElement.style.whiteSpace = "nowrap";
-  const unit = frameTitle == "勝利数" ? "%" : "回/戦";
+  const unit = frameTitle == "武将勝利数" ? "%" : "回/戦";
   countElement.innerHTML = countElement.innerHTML + "<br>" + calclatedCount + "<span class='font_80 ml_5'>" + unit + "</span>";
 }
 
